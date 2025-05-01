@@ -19,4 +19,4 @@ MonoBehaviour:
   enableFaceTrackingVisemesOutput: 0
   telemetryProjectGuid: 0a574868-236a-4df7-bd61-d469058db390
   bodyTrackingFidelity: 2
-  bodyTrackingJointSet: 1
+  bodyTrackingJointSet: 0

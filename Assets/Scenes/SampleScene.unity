@@ -847,7 +847,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1274089829}
   - component: {fileID: 1274089832}
-  - component: {fileID: 1274089831}
+  - component: {fileID: 1274089834}
   - component: {fileID: 1274089833}
   m_Layer: 0
   m_Name: BodyTracker
@@ -871,23 +871,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1143272413}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1274089831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274089828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skeletonType: 3
-  _updateRootPose: 0
-  _updateRootScale: 0
-  _enablePhysicsCapsules: 0
-  _applyBoneTranslations: 1
 --- !u!114 &1274089832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,7 +883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274835e4e2feae04b87f0d000555f8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _providedSkeletonType: 1
+  _providedSkeletonType: 0
 --- !u!114 &1274089833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,7 +893,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1274089828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 793de54c45a767046936b6f9876137be, type: 3}
+  m_Script: {fileID: 11500000, guid: 02180057d1e5248499199957a4f2e83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   drawMeshes: 1
@@ -919,6 +902,23 @@ MonoBehaviour:
   drawLines: 1
   lineWidth: 0.005
   lineColor: {r: 0, g: 0, b: 1, a: 1}
+--- !u!114 &1274089834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274089828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skeletonType: 2
+  _updateRootPose: 0
+  _updateRootScale: 0
+  _enablePhysicsCapsules: 0
+  _applyBoneTranslations: 1
 --- !u!1 &1764382102
 GameObject:
   m_ObjectHideFlags: 0
