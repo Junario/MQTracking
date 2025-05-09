@@ -20,7 +20,7 @@ namespace BodyTracking
         private Material lineMaterial;
         private bool isBodyTrackingEnabled = false;
 
-        public List<(string name, Vector3 position)> BodyPositions { get; private set; } = new List<(string, Vector3)>();
+        public List<(string name, Vector3 position, Quaternion orientation)> BodyPositions { get; private set; } = new List<(string, Vector3, Quaternion)>();
 
         private readonly Dictionary<string, GameObject> jointSpheres = new Dictionary<string, GameObject>();
         private readonly Dictionary<string, LineRenderer> jointLines = new Dictionary<string, LineRenderer>();
@@ -118,9 +118,10 @@ namespace BodyTracking
                 if (bone != null && bone.Transform != null)
                 {
                     Vector3 position = bone.Transform.position;
-                    BodyPositions.Add((joint.name, position));
+                    Quaternion orientation = bone.Transform.rotation;
+                    BodyPositions.Add((joint.name, position, orientation));
                     jointPositions[joint.name] = position;
-                    Debug.Log($"[BODY_JOINT_{joint.name}] POSITION = ({position.x:F2}, {position.y:F2}, {position.z:F2})");
+                    Debug.Log($"[BODY_JOINT_{joint.name}] POSITION = ({position.x:F2}, {position.y:F2}, {position.z:F2}), ORIENTATION = ({orientation.x:F2}, {orientation.y:F2}, {orientation.z:F2}, {orientation.w:F2})");
                 }
                 else
                 {

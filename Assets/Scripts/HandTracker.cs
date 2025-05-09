@@ -30,8 +30,8 @@ public class HandTracker : MonoBehaviour
 
     private bool isHandTrackingEnabled = false;
 
-    public List<(string name, Vector3 position)> LeftHandPositions { get; private set; } = new List<(string, Vector3)>();
-    public List<(string name, Vector3 position)> RightHandPositions { get; private set; } = new List<(string, Vector3)>();
+    public List<(string name, Vector3 position, Quaternion orientation)> LeftHandPositions { get; private set; } = new List<(string, Vector3, Quaternion)>();
+    public List<(string name, Vector3 position, Quaternion orientation)> RightHandPositions { get; private set; } = new List<(string, Vector3, Quaternion)>();
 
     private readonly Dictionary<string, GameObject> jointSpheres = new Dictionary<string, GameObject>();
     private readonly Dictionary<string, LineRenderer> jointLines = new Dictionary<string, LineRenderer>();
@@ -84,7 +84,7 @@ public class HandTracker : MonoBehaviour
         ProcessHandJoints("right", rightHand, rightSkeleton, rightHandJoints, rightHandLines, RightHandPositions);
     }
 
-    void ProcessHandJoints(string handSide, OVRHand hand, OVRSkeleton skeleton, GameObject jointGroup, GameObject lineGroup, List<(string name, Vector3 position)> handPositions)
+    void ProcessHandJoints(string handSide, OVRHand hand, OVRSkeleton skeleton, GameObject jointGroup, GameObject lineGroup, List<(string name, Vector3 position, Quaternion orientation)> handPositions)
     {
         if (!hand.IsTracked || !skeleton.IsDataValid || skeleton.Bones == null || skeleton.Bones.Count == 0)
         {
@@ -132,8 +132,9 @@ public class HandTracker : MonoBehaviour
             if (bone != null && bone.Transform != null)
             {
                 Vector3 position = bone.Transform.position;
-                handPositions.Add((joint.name, position));
-                Debug.Log($"[{handSide.ToUpper()}_HAND_JOINT_{joint.name}] POSITION = ({position.x:F2}, {position.y:F2}, {position.z:F2})");
+                Quaternion orientation = bone.Transform.rotation;
+                handPositions.Add((joint.name, position, orientation));
+                Debug.Log($"[{handSide.ToUpper()}_HAND_JOINT_{joint.name}] POSITION = ({position.x:F2}, {position.y:F2}, {position.z:F2}), ORIENTATION = ({orientation.x:F2}, {orientation.y:F2}, {orientation.z:F2}, {orientation.w:F2})");
             }
             else
             {

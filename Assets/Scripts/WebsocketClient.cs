@@ -103,7 +103,11 @@ public class WebSocketClient : MonoBehaviour
                 name = j.name,
                 x = j.position.x,
                 y = j.position.y,
-                z = j.position.z
+                z = j.position.z,
+                qx = j.orientation.x,
+                qy = j.orientation.y,
+                qz = j.orientation.z,
+                qw = j.orientation.w
             }).ToArray();
 
             rightHandData = handTracker.RightHandPositions.Select(j => new
@@ -111,7 +115,11 @@ public class WebSocketClient : MonoBehaviour
                 name = j.name,
                 x = j.position.x,
                 y = j.position.y,
-                z = j.position.z
+                z = j.position.z,
+                qx = j.orientation.x,
+                qy = j.orientation.y,
+                qz = j.orientation.z,
+                qw = j.orientation.w
             }).ToArray();
 
             Debug.Log($"[WebSocketClient] HandTracker active. LeftHandData count: {leftHandData.Length}, RightHandData count: {rightHandData.Length}");
@@ -124,7 +132,11 @@ public class WebSocketClient : MonoBehaviour
                 name = j.name,
                 x = j.position.x,
                 y = j.position.y,
-                z = j.position.z
+                z = j.position.z,
+                qx = j.orientation.x,
+                qy = j.orientation.y,
+                qz = j.orientation.z,
+                qw = j.orientation.w
             }).ToArray();
 
             Debug.Log($"[WebSocketClient] BodyTracker active. BodyData count: {bodyData.Length}, Joints: {string.Join(", ", bodyTracker.BodyPositions.Select(j => j.name))}");
