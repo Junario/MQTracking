@@ -1,5 +1,4 @@
 using UnityEngine;
-using Oculus.Interaction;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -88,13 +87,31 @@ namespace BodyTracking
 
             Debug.Log("Body is tracked.");
 
+            // Debug all available BoneIds to check for Arm support (1초마다 출력)
+            if (Time.frameCount % 60 == 0)
+            {
+                foreach (var bone in skeleton.Bones)
+                {
+                    Debug.Log($"Available Bone: {bone.Id}, Position: {bone.Transform.position}");
+                }
+            }
+
             var targetJoints = new List<(OVRSkeleton.BoneId boneId, string name)>
             {
-                (OVRSkeleton.BoneId.Body_Hips, "HIPS"),
-                (OVRSkeleton.BoneId.Body_Head, "HEAD")
+                (OVRSkeleton.BoneId.Body_Hips, "Hip"),
+                (OVRSkeleton.BoneId.Body_Head, "Head"),
+                (OVRSkeleton.BoneId.Body_LeftShoulder, "LeftShoulder"),
+                (OVRSkeleton.BoneId.Body_LeftArmUpper, "LeftArmUpper"),
+                (OVRSkeleton.BoneId.Body_LeftArmLower, "LeftArmLower"),
+                (OVRSkeleton.BoneId.Body_LeftHandWrist, "LeftHandWrist"),
+                (OVRSkeleton.BoneId.Body_RightShoulder, "RightShoulder"),
+                (OVRSkeleton.BoneId.Body_RightArmUpper, "RightArmUpper"),
+                (OVRSkeleton.BoneId.Body_RightArmLower, "RightArmLower"),
+                (OVRSkeleton.BoneId.Body_RightHandWrist, "RightHandWrist")
             };
 
             BodyPositions.Clear();
+            var jointPositions = new Dictionary<string, Vector3>();
             foreach (var joint in targetJoints)
             {
                 var bone = skeleton.Bones.FirstOrDefault(b => b.Id == joint.boneId);
@@ -102,6 +119,7 @@ namespace BodyTracking
                 {
                     Vector3 position = bone.Transform.position;
                     BodyPositions.Add((joint.name, position));
+                    jointPositions[joint.name] = position;
                     Debug.Log($"[BODY_JOINT_{joint.name}] POSITION = ({position.x:F2}, {position.y:F2}, {position.z:F2})");
                 }
                 else
@@ -110,16 +128,11 @@ namespace BodyTracking
                 }
             }
 
-            var jointPositions = new Dictionary<string, Vector3>();
-            foreach (var joint in targetJoints)
+            if (drawMeshes)
             {
-                var bone = skeleton.Bones.FirstOrDefault(b => b.Id == joint.boneId);
-                if (bone != null && bone.Transform != null)
+                foreach (var joint in targetJoints)
                 {
-                    Vector3 position = bone.Transform.position;
-                    jointPositions[joint.name] = position;
-
-                    if (drawMeshes)
+                    if (jointPositions.ContainsKey(joint.name))
                     {
                         string sphereName = $"Body_{joint.name}_Sphere";
                         if (!jointSpheres.TryGetValue(sphereName, out GameObject jointSphere))
@@ -132,21 +145,31 @@ namespace BodyTracking
                             Destroy(jointSphere.GetComponent<SphereCollider>());
                             jointSpheres[sphereName] = jointSphere;
                         }
-                        jointSphere.transform.position = position;
+                        jointSphere.transform.position = jointPositions[joint.name];
                     }
                 }
             }
 
             if (drawLines)
             {
-                for (int i = 0; i < targetJoints.Count - 1; i++)
+                var connections = new List<(string fromName, string toName)>
                 {
-                    string fromName = targetJoints[i].name;
-                    string toName = targetJoints[i + 1].name;
+                    ("Hip", "Head"),
+                    ("Hip", "LeftShoulder"),
+                    ("Hip", "RightShoulder"),
+                    ("LeftShoulder", "LeftArmUpper"),
+                    ("LeftArmUpper", "LeftArmLower"),
+                    ("LeftArmLower", "LeftHandWrist"),
+                    ("RightShoulder", "RightArmUpper"),
+                    ("RightArmUpper", "RightArmLower"),
+                    ("RightArmLower", "RightHandWrist")
+                };
 
-                    if (jointPositions.ContainsKey(fromName) && jointPositions.ContainsKey(toName))
+                foreach (var conn in connections)
+                {
+                    if (jointPositions.ContainsKey(conn.fromName) && jointPositions.ContainsKey(conn.toName))
                     {
-                        DrawLineBetween(fromName, toName, jointPositions[fromName], jointPositions[toName]);
+                        DrawLineBetween(conn.fromName, conn.toName, jointPositions[conn.fromName], jointPositions[conn.toName]);
                     }
                 }
             }

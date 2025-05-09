@@ -10,8 +10,6 @@ public class WebSocketClient : MonoBehaviour
     [SerializeField] private HandTracker handTracker;
     [SerializeField] private BodyTracking.BodyTracker bodyTracker;
 
-    private float sendInterval = 0.5f; // 0.5초 간격 전송
-    private float sendTimer = 0f;
     private float reconnectInterval = 5f; // 5초 간격 재연결 시도
     private float reconnectTimer = 0f;
 
@@ -93,9 +91,6 @@ public class WebSocketClient : MonoBehaviour
             return;
         }
 
-        sendTimer += Time.deltaTime;
-        if (sendTimer < sendInterval) return;
-
         // 데이터 준비
         object[] leftHandData = null;
         object[] rightHandData = null;
@@ -124,24 +119,26 @@ public class WebSocketClient : MonoBehaviour
 
         if (bodyTracker != null && bodyTracker.gameObject.activeInHierarchy)
         {
-            bodyData = bodyTracker.BodyPositions
-                .Where(j => j.name == "HEAD" || j.name == "HIPS")
-                .Select(j => new
-                {
-                    name = j.name,
-                    x = j.position.x,
-                    y = j.position.y,
-                    z = j.position.z
-                }).ToArray();
+            bodyData = bodyTracker.BodyPositions.Select(j => new
+            {
+                name = j.name,
+                x = j.position.x,
+                y = j.position.y,
+                z = j.position.z
+            }).ToArray();
 
-            Debug.Log($"[WebSocketClient] BodyTracker active. BodyData count: {bodyData.Length}");
+            Debug.Log($"[WebSocketClient] BodyTracker active. BodyData count: {bodyData.Length}, Joints: {string.Join(", ", bodyTracker.BodyPositions.Select(j => j.name))}");
+        }
+        else
+        {
+            Debug.LogWarning("[WebSocketClient] BodyTracker is null or inactive. No body data will be sent.");
         }
 
         // JSON 생성
         var jsonData = new
         {
-            Left_Hand = leftHandData,
-            Right_Hand = rightHandData,
+            LeftHand = leftHandData,
+            RightHand = rightHandData,
             Body = bodyData
         };
         string jsonString = JsonConvert.SerializeObject(jsonData);
@@ -157,8 +154,6 @@ public class WebSocketClient : MonoBehaviour
         {
             Debug.LogError($"[WebSocketClient] Failed to send data: {e.Message}");
         }
-
-        sendTimer = 0f;
     }
 
     void OnDestroy()
