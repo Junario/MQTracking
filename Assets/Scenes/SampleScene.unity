@@ -907,7 +907,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143272419}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 555725d48e9051a4bb6b8d45178c2fdd, type: 3}
   m_Name: 
@@ -1039,7 +1039,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221546913}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4acbc52635709b54c9baf2bb681a5a14, type: 3}
   m_Name: 
@@ -1431,10 +1431,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawMeshes: 1
-  jointSphereSize: 0.02
+  jointSphereSize: 0.01
   sphereColor: {r: 1, g: 0, b: 0, a: 1}
   drawLines: 1
-  lineWidth: 0.005
+  lineWidth: 0.003
   lineColor: {r: 0, g: 0, b: 1, a: 1}
   leftHandAnchor: {fileID: 1143272416}
   rightHandAnchor: {fileID: 1143272414}
