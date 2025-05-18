@@ -100,10 +100,12 @@ namespace BodyTracking
             {
                 (OVRSkeleton.BoneId.Body_Hips, "Hip"),
                 (OVRSkeleton.BoneId.Body_Head, "Head"),
+
                 (OVRSkeleton.BoneId.Body_LeftShoulder, "LeftShoulder"),
                 (OVRSkeleton.BoneId.Body_LeftArmUpper, "LeftArmUpper"),
                 (OVRSkeleton.BoneId.Body_LeftArmLower, "LeftArmLower"),
                 (OVRSkeleton.BoneId.Body_LeftHandWrist, "LeftHandWrist"),
+
                 (OVRSkeleton.BoneId.Body_RightShoulder, "RightShoulder"),
                 (OVRSkeleton.BoneId.Body_RightArmUpper, "RightArmUpper"),
                 (OVRSkeleton.BoneId.Body_RightArmLower, "RightArmLower"),
@@ -129,51 +131,51 @@ namespace BodyTracking
                 }
             }
 
-            if (drawMeshes)
-            {
-                foreach (var joint in targetJoints)
-                {
-                    if (jointPositions.ContainsKey(joint.name))
-                    {
-                        string sphereName = $"Body_{joint.name}_Sphere";
-                        if (!jointSpheres.TryGetValue(sphereName, out GameObject jointSphere))
-                        {
-                            jointSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                            jointSphere.name = sphereName;
-                            jointSphere.transform.localScale = Vector3.one * jointSphereSize;
-                            jointSphere.GetComponent<Renderer>().material = sphereMaterial;
-                            jointSphere.transform.SetParent(bodyJoints.transform);
-                            Destroy(jointSphere.GetComponent<SphereCollider>());
-                            jointSpheres[sphereName] = jointSphere;
-                        }
-                        jointSphere.transform.position = jointPositions[joint.name];
-                    }
-                }
-            }
+            // if (drawMeshes)
+            // {
+            //     foreach (var joint in targetJoints)
+            //     {
+            //         if (jointPositions.ContainsKey(joint.name))
+            //         {
+            //             string sphereName = $"Body_{joint.name}_Sphere";
+            //             if (!jointSpheres.TryGetValue(sphereName, out GameObject jointSphere))
+            //             {
+            //                 jointSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //                 jointSphere.name = sphereName;
+            //                 jointSphere.transform.localScale = Vector3.one * jointSphereSize;
+            //                 jointSphere.GetComponent<Renderer>().material = sphereMaterial;
+            //                 jointSphere.transform.SetParent(bodyJoints.transform);
+            //                 Destroy(jointSphere.GetComponent<SphereCollider>());
+            //                 jointSpheres[sphereName] = jointSphere;
+            //             }
+            //             jointSphere.transform.position = jointPositions[joint.name];
+            //         }
+            //     }
+            // }
 
-            if (drawLines)
-            {
-                var connections = new List<(string fromName, string toName)>
-                {
-                    ("Hip", "Head"),
-                    ("Hip", "LeftShoulder"),
-                    ("Hip", "RightShoulder"),
-                    ("LeftShoulder", "LeftArmUpper"),
-                    ("LeftArmUpper", "LeftArmLower"),
-                    ("LeftArmLower", "LeftHandWrist"),
-                    ("RightShoulder", "RightArmUpper"),
-                    ("RightArmUpper", "RightArmLower"),
-                    ("RightArmLower", "RightHandWrist")
-                };
+            // if (drawLines)
+            // {
+            //     var connections = new List<(string fromName, string toName)>
+            //     {
+            //         ("Hip", "Head"),
+            //         ("Hip", "LeftShoulder"),
+            //         ("Hip", "RightShoulder"),
+            //         ("LeftShoulder", "LeftArmUpper"),
+            //         ("LeftArmUpper", "LeftArmLower"),
+            //         ("LeftArmLower", "LeftHandWrist"),
+            //         ("RightShoulder", "RightArmUpper"),
+            //         ("RightArmUpper", "RightArmLower"),
+            //         ("RightArmLower", "RightHandWrist")
+            //     };
 
-                foreach (var conn in connections)
-                {
-                    if (jointPositions.ContainsKey(conn.fromName) && jointPositions.ContainsKey(conn.toName))
-                    {
-                        DrawLineBetween(conn.fromName, conn.toName, jointPositions[conn.fromName], jointPositions[conn.toName]);
-                    }
-                }
-            }
+            //     foreach (var conn in connections)
+            //     {
+            //         if (jointPositions.ContainsKey(conn.fromName) && jointPositions.ContainsKey(conn.toName))
+            //         {
+            //             DrawLineBetween(conn.fromName, conn.toName, jointPositions[conn.fromName], jointPositions[conn.toName]);
+            //         }
+            //     }
+            // }
         }
 
         void OnDestroy()

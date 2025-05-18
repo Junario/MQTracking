@@ -104,25 +104,57 @@ public class HandTracker : MonoBehaviour
         {
             (OVRSkeleton.BoneId.Hand_Thumb0, "Thumb0"),
             (OVRSkeleton.BoneId.Hand_Thumb1, "Thumb1"),
+            (OVRSkeleton.BoneId.Hand_Thumb2, "Thumb2"),
+            (OVRSkeleton.BoneId.Hand_Thumb3, "Thumb3"),
+            (OVRSkeleton.BoneId.Hand_ThumbTip, "ThumbTip"),
             (OVRSkeleton.BoneId.Hand_Index1, "Index1"),
+            (OVRSkeleton.BoneId.Hand_Index2, "Index2"),
+            // (OVRSkeleton.BoneId.Hand_Index3, "Index3"),
             (OVRSkeleton.BoneId.Hand_Middle1, "Middle1"),
+            (OVRSkeleton.BoneId.Hand_Middle2, "Middle2"),
+            // (OVRSkeleton.BoneId.Hand_Middle3, "Middle3"),
             (OVRSkeleton.BoneId.Hand_Ring1, "Ring1"),
-            (OVRSkeleton.BoneId.Hand_Pinky1, "Pinky1")
+            (OVRSkeleton.BoneId.Hand_Ring2, "Ring2"),
+            // (OVRSkeleton.BoneId.Hand_Ring3, "Ring3"),
+            (OVRSkeleton.BoneId.Hand_Pinky1, "Pinky1"),
+            (OVRSkeleton.BoneId.Hand_Pinky2, "Pinky2"),
+            // (OVRSkeleton.BoneId.Hand_Pinky3, "Pinky3"),
+
+            (OVRSkeleton.BoneId.Body_LeftHandWrist, "HandWrist"),
+            (OVRSkeleton.BoneId.Body_RightHandWrist, "HandWrist")
         };
 
         OVRSkeleton.BoneId[] visualizationJoints = new OVRSkeleton.BoneId[]
         {
-            OVRSkeleton.BoneId.Hand_Thumb0,
-            OVRSkeleton.BoneId.Hand_Thumb1,
-            OVRSkeleton.BoneId.Hand_ThumbTip,
-            OVRSkeleton.BoneId.Hand_Index1,
-            OVRSkeleton.BoneId.Hand_IndexTip,
-            OVRSkeleton.BoneId.Hand_Middle1,
-            OVRSkeleton.BoneId.Hand_MiddleTip,
-            OVRSkeleton.BoneId.Hand_Ring1,
-            OVRSkeleton.BoneId.Hand_RingTip,
-            OVRSkeleton.BoneId.Hand_Pinky1,
-            OVRSkeleton.BoneId.Hand_PinkyTip
+            // OVRSkeleton.BoneId.Hand_Thumb0,
+            // OVRSkeleton.BoneId.Hand_Thumb1,
+            // OVRSkeleton.BoneId.Hand_Thumb2,
+            // OVRSkeleton.BoneId.Hand_Thumb3,
+            // OVRSkeleton.BoneId.Hand_ThumbTip,
+            // // OVRSkeleton.BoneId.Hand_Thumb2,
+            // // OVRSkeleton.BoneId.Hand_Thumb3,
+            // // OVRSkeleton.BoneId.Hand_Thumb2,
+            // // OVRSkeleton.BoneId.Hand_ThumbTip,
+            // // OVRSkeleton.BoneId.Hand_Index1,
+            // // OVRSkeleton.BoneId.Hand_Index2,
+            // // OVRSkeleton.BoneId.Hand_Index3,
+            // // OVRSkeleton.BoneId.Hand_Index2,
+            // OVRSkeleton.BoneId.Hand_Index1,
+            // OVRSkeleton.BoneId.Hand_Index2,
+            // OVRSkeleton.BoneId.Hand_Index3,
+            // OVRSkeleton.BoneId.Hand_IndexTip,
+            // OVRSkeleton.BoneId.Hand_Middle1,
+            // OVRSkeleton.BoneId.Hand_Middle2,
+            // OVRSkeleton.BoneId.Hand_Middle3,
+            // // OVRSkeleton.BoneId.Hand_MiddleTip,
+            // OVRSkeleton.BoneId.Hand_Ring1,
+            // OVRSkeleton.BoneId.Hand_Ring2,
+            // OVRSkeleton.BoneId.Hand_Ring3,
+            // // OVRSkeleton.BoneId.Hand_RingTip,
+            // OVRSkeleton.BoneId.Hand_Pinky1,
+            // OVRSkeleton.BoneId.Hand_Pinky2,
+            // OVRSkeleton.BoneId.Hand_Pinky3,
+            // // OVRSkeleton.BoneId.Hand_PinkyTip
         };
 
         handPositions.Clear();
