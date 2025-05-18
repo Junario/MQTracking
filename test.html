@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <video id="video" autoplay playsinline></video>
+    <script>
+        async function startWebRTC() {
+            const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+            
+            // 미디어 트랙 추가 (비디오 수신 전용)
+            pc.addTransceiver('video', { direction: 'recvonly' });
+
+            // 비디오 트랙 수신 시 처리
+            pc.ontrack = (event) => {
+                if (event.track.kind === "video") {
+                    const videoElement = document.getElementById("video");
+                    videoElement.srcObject = event.streams[0];
+                    console.log("Video track received");
+                }
+            };
+
+            // ICE 후보 상태 디버깅
+            pc.oniceconnectionstatechange = () => {
+                console.log("ICE connection state:", pc.iceConnectionState);
+            };
+
+            // SDP 오퍼 생성
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+
+            console.log("Offer SDP:", offer.sdp);
+
+            // WHEP 엔드포인트로 오퍼 전송
+            const response = await fetch("http://172.30.1.82:8889/vr_stream/whep", {
+                method: "POST",
+                headers: { "Content-Type": "application/sdp" },
+                body: offer.sdp
+            });
+
+            if (response.ok) {
+                const answer = await response.text();
+                console.log("Answer SDP:", answer);
+                await pc.setRemoteDescription({ type: "answer", sdp: answer });
+                console.log("WebRTC connection established");
+            } else {
+                console.error("Failed to connect:", await response.text());
+            }
+        }
+
+        startWebRTC().catch(err => console.error("Error:", err));
+    </script>
+</body>
+</html>
